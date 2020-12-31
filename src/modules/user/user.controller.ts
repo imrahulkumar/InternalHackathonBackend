@@ -62,7 +62,11 @@ export class UserController {
         const user = req.user;
         try {
             let staff = await Staff.find({ userId: user._id })
-            res.send({ ...staff, message: "Staff list" });
+            let staffList: any[] = []
+            if (staff) {
+                staffList = staff
+            }
+            res.send({ staffList, message: "Staff list" });
 
         } catch (error) {
             next(error);
