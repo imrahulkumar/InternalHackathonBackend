@@ -39,8 +39,13 @@ export class Server {
     }
 
     configureBodyParser() {
+        // this.app.use(cors(this.options));
+        // this.app.use(bodyParser.json({ limit: '50mb' }));
+        // this.app.use(bodyParser.urlencoded({ extended: true }))
         this.app.use(cors());
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json());
+        this.app.use(express.json());
+        this.app.use(bodyParser.text());
         this.app.use(bodyParser.urlencoded({ extended: true }))
     }
 
@@ -54,7 +59,7 @@ export class Server {
     }
 
     setRoutes() {
-        this.app.use('/api/3sc', UserRouter);
+        this.app.use('/api/sssc', UserRouter);
     }
 
     error404Handler() {
