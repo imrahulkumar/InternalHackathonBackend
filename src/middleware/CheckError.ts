@@ -16,8 +16,12 @@ export class GlobalCheckErrorMiddleWare {
 
     static async authentication(req, res, next) {
         const authHeader = req.headers.authorization;
-        const token = authHeader ? authHeader.slice(7, authHeader.length) : null;
-
+        let token;
+        if (authHeader.startsWith("Bearer ")){
+            token  = authHeader ? authHeader.slice(7, authHeader.length) : null;
+        } else {
+            token  = authHeader ? authHeader : null;
+        }
         try {
             req.errorStatus = 401;
             Jwt.verify(token, getEnvironmentVariable().jwt_secret, (err, decoded) => {                

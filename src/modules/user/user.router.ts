@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { UserController } from './user.controller';
 import { GlobalCheckErrorMiddleWare } from '../../middleware/CheckError';
 import { UserValidators } from './user.validators';
-import { StaffValidators } from '../staff/staff.validator';
+import { HackathonValidators } from './hackathon.validator';
 
 class UserRouter {
 
@@ -21,32 +21,37 @@ class UserRouter {
 
     getRoutes() {
 
-        // Get User List
-        this.router.get('/staff',
+        // Get hackathon List
+        this.router.get('/hackathon-list',
             GlobalCheckErrorMiddleWare.authentication,
-            UserController.staff);
+            UserController.hackathonIdeaList);
+
+            this.router.post('/upvote',
+            GlobalCheckErrorMiddleWare.authentication,
+            UserController.upvote);
 
     }
     postRoutes() {
 
-        // SIGN UP 
+        // SIGN UP Done
         this.router.post('/signup',
             UserValidators.signup(),
             GlobalCheckErrorMiddleWare.checkError,
             UserController.signup);
 
 
-        // LOGIN
+        // LOGIN Done
         this.router.post('/login',
             UserValidators.login(),
             GlobalCheckErrorMiddleWare.checkError,
             UserController.login);
 
-        this.router.post('/add/staff',
+        // Create Hackathon    
+        this.router.post('/add/hackathon',
             GlobalCheckErrorMiddleWare.authentication,
-            StaffValidators.staff(),
+            HackathonValidators.hackathon(),
             GlobalCheckErrorMiddleWare.checkError,
-            UserController.addStaff);
+            UserController.createHackathon);
 
     }
     patchRoutes() { }
