@@ -27,7 +27,13 @@ class GlobalCheckErrorMiddleWare {
     static authentication(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const authHeader = req.headers.authorization;
-            const token = authHeader ? authHeader.slice(7, authHeader.length) : null;
+            let token;
+            if (authHeader.startsWith("Bearer ")) {
+                token = authHeader ? authHeader.slice(7, authHeader.length) : null;
+            }
+            else {
+                token = authHeader ? authHeader : null;
+            }
             try {
                 req.errorStatus = 401;
                 Jwt.verify(token, env_1.getEnvironmentVariable().jwt_secret, (err, decoded) => {

@@ -8,14 +8,11 @@ class UserValidators {
         return [
             express_validator_1.body('employeeId', 'Employee Id is Required').isString()
                 .custom((employeeId, { req }) => {
-                console.log('req req', req.body);
                 return user_modal_1.default.findOne({ employeeId: employeeId }).then((user) => {
                     if (user) {
-                        console.log('1');
                         throw new Error('Employee Id Already Exist');
                     }
                     else {
-                        console.log('12');
                         return true;
                     }
                 });
@@ -24,7 +21,7 @@ class UserValidators {
         ];
     }
     static login() {
-        return [express_validator_1.body('employeeId', 'Employee Id is required').isEmail().custom((employeeId, { req }) => {
+        return [express_validator_1.body('employeeId', 'Employee Id is required').isString().custom((employeeId, { req }) => {
                 return user_modal_1.default.findOne({ employeeId: employeeId }).then(user => {
                     if (user) {
                         req.user = user;
