@@ -20,7 +20,7 @@ class Server {
             ],
             credentials: true,
             methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-            origin: 'http://localhost:4200',
+            origin: '*',
             preflightContinue: false,
         };
         this.setConfiguration();
